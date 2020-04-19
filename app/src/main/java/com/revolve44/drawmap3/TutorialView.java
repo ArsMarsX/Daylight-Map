@@ -15,7 +15,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 public class TutorialView extends FrameLayout {
     private static final float RADIUS = 200;
@@ -67,13 +69,29 @@ public class TutorialView extends FrameLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Bitmap original = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.trape);
+
+        Bitmap original = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.trapechg);
+        Bitmap resized = Bitmap.createScaledBitmap(original, 300, 400, true);
+
+        Bitmap original2 = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.trapechg);
+        Bitmap resized2 = Bitmap.createScaledBitmap(original, 300, 400, true);
+
+        Bitmap resized3 = Bitmap.createScaledBitmap(original, 300, 400, true);
 //        bitmap = Bitmap.createBitmap(parentWidth, parentHeight, Bitmap.Config.ARGB_8888);
 //        cnvs = new Canvas(bitmap);
 //        cnvs.drawRect(0, 0, cnvs.getWidth(), cnvs.getHeight(), semiTransparentPaint);
 //        cnvs.drawCircle(parentWidth / 2, parentHeight / 2, radius, transparentPaint);
         canvas.drawColor(mTutorialColor);
-        canvas.drawBitmap(original, mCx-150,mCy-150,mBackgroundPaint);
+        canvas.drawBitmap(resized, mCx,mCy,mBackgroundPaint);
+
+        canvas.drawBitmap(resized2, mCx-850,mCy,mBackgroundPaint);
+        canvas.drawBitmap(resized3, mCx+650,mCy,mBackgroundPaint);
+
+//        TranslateAnimation animation1 = new TranslateAnimation(-220, 100,250, 200 );
+//        animation1.setDuration(3000);
+//        //animation1.setFillAfter(true);
+//
+//        original.startAnimation(animation1);
 //        canvas.drawColor(mTutorialColor);
 //        if (mCx >= 0 && mCy >= 0) {
 ////            Resources res = getResources();
