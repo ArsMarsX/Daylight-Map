@@ -13,11 +13,14 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import java.util.concurrent.TimeUnit;
 
 public class TutorialView extends FrameLayout {
     private static final float RADIUS = 200;
@@ -70,22 +73,11 @@ public class TutorialView extends FrameLayout {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        Bitmap original = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.trapechg);
-        Bitmap resized = Bitmap.createScaledBitmap(original, 300, 400, true);
-
-        Bitmap original2 = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.trapechg);
-        Bitmap resized2 = Bitmap.createScaledBitmap(original, 300, 400, true);
-
-        Bitmap resized3 = Bitmap.createScaledBitmap(original, 300, 400, true);
-//        bitmap = Bitmap.createBitmap(parentWidth, parentHeight, Bitmap.Config.ARGB_8888);
-//        cnvs = new Canvas(bitmap);
-//        cnvs.drawRect(0, 0, cnvs.getWidth(), cnvs.getHeight(), semiTransparentPaint);
-//        cnvs.drawCircle(parentWidth / 2, parentHeight / 2, radius, transparentPaint);
-        canvas.drawColor(mTutorialColor);
-        canvas.drawBitmap(resized, mCx,mCy,mBackgroundPaint);
-
-        canvas.drawBitmap(resized2, mCx-850,mCy,mBackgroundPaint);
-        canvas.drawBitmap(resized3, mCx+650,mCy,mBackgroundPaint);
+        try {
+            moveSunshine(canvas);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 //        TranslateAnimation animation1 = new TranslateAnimation(-220, 100,250, 200 );
 //        animation1.setDuration(3000);
@@ -114,7 +106,43 @@ public class TutorialView extends FrameLayout {
 //            //Draw result after performing masking
 //            canvas.drawBitmap(result, 0, 0, new Paint());
 
+    }
 
+    public void moveSunshine(final Canvas canvas) throws InterruptedException {
+        Bitmap original = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.trapechg);
+        final Bitmap resized = Bitmap.createScaledBitmap(original, 300, 400, true);
+
+        Bitmap original2 = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.trapechg);
+        Bitmap resized2 = Bitmap.createScaledBitmap(original, 300, 400, true);
+
+        Bitmap resized3 = Bitmap.createScaledBitmap(original, 300, 400, true);
+//        bitmap = Bitmap.createBitmap(parentWidth, parentHeight, Bitmap.Config.ARGB_8888);
+//        cnvs = new Canvas(bitmap);
+//        cnvs.drawRect(0, 0, cnvs.getWidth(), cnvs.getHeight(), semiTransparentPaint);
+//        cnvs.drawCircle(parentWidth / 2, parentHeight / 2, radius, transparentPaint);
+        canvas.drawColor(mTutorialColor);
+
+        //canvas.drawBitmap(resized, mCx-600,mCy,mBackgroundPaint);
+        canvas.drawBitmap(resized, mCx,mCy,mBackgroundPaint);
+        TimeUnit.SECONDS.sleep(1);
+
+        canvas.drawBitmap(resized, mCx+400,mCy,mBackgroundPaint);
+        TimeUnit.SECONDS.sleep(1);
+//        canvas.drawBitmap(resized2, mCx-850,mCy,mBackgroundPaint);
+//        canvas.drawBitmap(resized3, mCx+650,mCy,mBackgroundPaint);
+
+        postInvalidateDelayed(TimeUnit.SECONDS.toMillis(1));// delay
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                //Do something after 2s
+//            }
+//        }, 2000);
+
+    }
+    public void testt(){
 
     }
 }
